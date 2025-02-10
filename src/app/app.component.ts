@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'sports-buddy';
+
+  // Method to handle the toolbar button click
+  onButtonClick() {
+    alert('Toolbar button clicked!');
+  }
+
+  // Method to handle the alert button click
+  onAlertButtonClick() {
+    alert('You clicked the "Show Alert" button!');
+  }
 }
