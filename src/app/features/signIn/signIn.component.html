@@ -1,0 +1,27 @@
+<mat-card class="card">
+    <form [formGroup]="fg" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username *" formControlName="username" required>
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="fg.controls['username'].invalid && fg.controls['username'].touched">
+          {{ errorUMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password *" formControlName="password" required>
+        <button mat-icon-button matSuffix type="button" (click)="togglePassword()">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="fg.controls['password'].invalid && fg.controls['password'].touched">
+          {{ errorPMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-card-actions class="btn-wrap">
+        <button class="signup" type="button" (click)="signUp()" mat-raised-button>Sign Up</button>
+        <button class="signin" type="submit" mat-raised-button [disabled]="fg.invalid">Sign In</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+  
