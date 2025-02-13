@@ -1,8 +1,8 @@
 .card {
-    padding: 40px;
+    padding: 0px 40px;
     max-width: 400px;
     margin: 0 auto;
-    height: 70%;
+    min-height: 85%;
 }
 
 .mat-form-field {
@@ -14,6 +14,7 @@
     display: flex;
     justify-content: space-between;
     margin-left: 0px;
+    margin-top: 10px;
 }
 
 .signin {
@@ -23,4 +24,57 @@
 
 .submit {
     padding: 3px 20px;
+}
+
+::ng-deep .sign-up .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+
+::ng-deep .mat-horizontal-content-container,
+::ng-deep .mat-horizontal-stepper-header {
+    padding: 0px !important;
+}
+
+.uploadWrap {
+    display: flex;
+    justify-content: space-between;
+    outline: 1px solid #e6e6e6;
+    border-radius: 3px;
+    margin: 6px 1px 1px 1px;
+}
+
+.labelBtn {
+    background: #e9a234;
+    padding: 14px;
+    cursor: pointer;
+}
+
+.uploadInput {
+    display: none;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 80px;
+    margin-top: 10px;
+}
+
+::ng-deep .snackbar-style {
+    background-color: #ff438b;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+::ng-deep .mat-simple-snackbar-action {
+    color: white;
+}
+
+.rules {
+    margin-top: 30px;
+}
+
+.unorderedList {
+    padding-left: 16px;
+    margin-top: 2px;
 }

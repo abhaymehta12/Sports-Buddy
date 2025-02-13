@@ -1,43 +1,69 @@
-<mat-card class="card">
-    <form [formGroup]="fg" (ngSubmit)="submitForm()">
-        <mat-tab-group>
-            <mat-tab label="Personal Details">
-                <mat-form-field appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input matInput placeholder="Name *" formControlName="name" required>
-                    <mat-icon matSuffix>account_circle</mat-icon>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Contact</mat-label>
-                    <input matInput placeholder="Contact *" formControlName="contact" required>
-                    <mat-icon matSuffix>phone</mat-icon>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Address</mat-label>
-                    <input matInput placeholder="Address *" formControlName="address" required>
-                    <mat-icon matSuffix>home</mat-icon>
-                </mat-form-field>
-            </mat-tab>
-            <mat-tab label="Credentials">
-                <mat-form-field appearance="outline">
-                    <mat-label>Username</mat-label>
-                    <input matInput placeholder="Username *" formControlName="username" required>
-                    <mat-icon matSuffix>person</mat-icon>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password *"
-                        formControlName="password" required>
-                    <button mat-icon-button matSuffix type="button" (click)="togglePassword()">
-                        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                    </button>
-                </mat-form-field>
-            </mat-tab>
-        </mat-tab-group>
+<mat-card class="card sign-up">
+    <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+        <mat-stepper [linear]="true" #stepper>
+            <!-- First Step -->
+            <mat-step [stepControl]="formGroup.get('firstStep')!" label="Personal Info">
+                <div formGroupName="firstStep">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name *" formControlName="name" required>
+                        <mat-icon matSuffix>account_circle</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact</mat-label>
+                        <input matInput placeholder="Contact *" formControlName="contact" required>
+                        <mat-icon matSuffix>phone</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Address *" formControlName="address" required>
+                        <mat-icon matSuffix>home</mat-icon>
+                    </mat-form-field>
+
+                    <!-- File upload -->
+                    <div class="uploadWrap">
+                        <label class="labelBtn" for="imageUpload">Upload Image</label>
+                        <input class="uploadInput" id="imageUpload" type="file" (change)="onFileSelected($event)"
+                            accept="image/*" required />
+                        <mat-icon matSuffix style="padding: 12px;">cloud_upload</mat-icon>
+                    </div>
+                    <!-- Preview of selected image -->
+                    <div *ngIf="imagePreview">
+                        <img [src]="imagePreview" alt="Image Preview" class="image-preview" />
+                    </div>
+                </div>
+            </mat-step>
+
+            <!-- Second Step -->
+            <mat-step [stepControl]="formGroup.get('secondStep')!" label="Credentials">
+                <div formGroupName="secondStep">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="Username *" formControlName="username" required>
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password *"
+                            formControlName="password" required>
+                        <button mat-icon-button matSuffix type="button" (click)="togglePassword()">
+                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <div class="rules">
+                        Rules for password:
+                        <ul class="unorderedList">
+                            <li>Enter atleast 6 characters.</li>
+                            <li>Should contain a special character.</li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-stepper>
 
         <mat-card-actions class="btn-wrap">
             <button class="signin" type="button" (click)="signIn()" mat-raised-button>Sign In</button>
-            <button class="submit" type="submit" mat-raised-button [disabled]="fg.invalid">Submit</button>
+            <button class="submit" type="submit" mat-raised-button [disabled]="formGroup.invalid">Submit</button>
         </mat-card-actions>
     </form>
 </mat-card>
