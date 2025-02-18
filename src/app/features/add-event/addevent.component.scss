@@ -1,0 +1,40 @@
+.event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: space-between;
+    }
+
+    .form-field {
+        flex: 1;
+        min-width: 45%;
+    }
+
+    @media (max-width: 560px) {
+        .form-row {
+            flex-direction: column;
+        }
+
+        .form-field {
+            min-width: 100%;
+        }
+    }
+}
+
+.mat-dialog-content {
+    height: 350px;
+}
+
+.mat-dialog-actions {
+    justify-content: center;
+}
+
+.btn-submit {
+    background-color: #d7c361;
+    margin-right: 10px;
+}

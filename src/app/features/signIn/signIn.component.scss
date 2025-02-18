@@ -3,6 +3,7 @@
     max-width: 400px;
     margin: 0 auto;
     height: 70%;
+    text-align: center;
 }
 
 .mat-form-field {
@@ -23,4 +24,17 @@
 
 .signin {
     padding: 3px 20px;
+}
+
+.signinGoogle {
+    margin-top: 40px;
+    font-size: 20px;
+    font-family: none;
+    padding: 6px 40px;
+    color: indianred;
+}
+
+.mat-icon {
+    margin-bottom: 10px;
+    margin-right: 14px;
 }

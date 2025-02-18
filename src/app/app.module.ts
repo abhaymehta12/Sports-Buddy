@@ -7,6 +7,10 @@ import { AdminComponent } from "../app/features/admin/admin.component";
 import { UserComponent } from "../app/features/user/user.component";
 import { SignInComponent } from "../app/features/signIn/signIn.component";
 import { SignUpComponent } from "../app/features/signup/signup.component";
+import { AddEventComponent } from "../app/features/add-event/addevent.component";
+import { environment } from '../environments/environment';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { SharedModule } from "./shared.module";
 
@@ -16,13 +20,16 @@ import { SharedModule } from "./shared.module";
     SignInComponent,
     SignUpComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth())
   ],
   providers: [],
   bootstrap: [AppComponent]

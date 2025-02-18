@@ -12,6 +12,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -25,7 +32,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTabsModule,
     ReactiveFormsModule,
     MatStepperModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatListModule,
+    MatSelectModule,
+    FormsModule,
+    MatMenuModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -37,7 +51,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTabsModule,
     ReactiveFormsModule,
     MatStepperModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatListModule,
+    MatSelectModule,
+    FormsModule,
+    MatMenuModule,
+    MatDialogModule
   ]
 })
 export class SharedModule { }

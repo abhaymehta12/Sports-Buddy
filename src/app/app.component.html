@@ -1,6 +1,9 @@
 <mat-toolbar color="primary">
   Sports Buddy
-  <button mat-button (click)="onButtonClick()"><mat-icon>menu</mat-icon></button> <!-- Button in the toolbar -->
+  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button (click)="openDialog()" mat-menu-item>Add Event</button>
+  </mat-menu>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
