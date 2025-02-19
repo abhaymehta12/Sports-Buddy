@@ -21,6 +21,7 @@ export class AppComponent {
         category: 'Outdoor',
         sport_place: 'Stadium',
         location: 'New York',
+        landmark: '',
         images: []
       }
     });

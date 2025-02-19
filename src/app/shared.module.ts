@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     FormsModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSliderModule
   ],
   exports: [
     MatButtonModule,
@@ -58,7 +60,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     FormsModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSliderModule
   ]
 })
 export class SharedModule { }

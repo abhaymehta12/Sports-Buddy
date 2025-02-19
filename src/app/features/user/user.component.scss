@@ -1,0 +1,46 @@
+.demo-table {
+    width: 100%;
+}
+
+.mat-row {
+    cursor: pointer;
+}
+
+.mat-row:hover {
+    background: #ebe3defa;
+}
+
+tr.mat-row {
+    height: 40px;
+}
+
+.secondTab {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.secondTab span {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-select {
+    width: 214px;
+    border: 1px solid #ebe3defa;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.sliderWrap {
+    width: 300px;
+}
+
+@media (max-width: 560px) {
+    .secondTab {
+        flex-direction: column;
+    }
+    .sliderWrap {
+        margin-top: 30px;
+    }
+}

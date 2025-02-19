@@ -5,17 +5,11 @@
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Event</mat-label>
                 <input matInput formControlName="event" required>
-                <mat-error *ngIf="eventForm.get('event')?.hasError('required')">
-                    Event is required.
-                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Sport</mat-label>
                 <input matInput formControlName="sport" required>
-                <mat-error *ngIf="eventForm.get('sport')?.hasError('required')">
-                    Sport is required.
-                </mat-error>
             </mat-form-field>
         </div>
 
@@ -23,17 +17,11 @@
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Category</mat-label>
                 <input matInput formControlName="category" required>
-                <mat-error *ngIf="eventForm.get('category')?.hasError('required')">
-                    Category is required.
-                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Sport Place</mat-label>
                 <input matInput formControlName="sport_place" required>
-                <mat-error *ngIf="eventForm.get('sport_place')?.hasError('required')">
-                    Sport place is required.
-                </mat-error>
             </mat-form-field>
         </div>
 
@@ -41,11 +29,15 @@
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Location</mat-label>
                 <input matInput formControlName="location" required>
-                <mat-error *ngIf="eventForm.get('location')?.hasError('required')">
-                    Location is required.
-                </mat-error>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Landmark</mat-label>
+                <input matInput formControlName="landmark" required>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Images</mat-label>
                 <input matInput formControlName="images">

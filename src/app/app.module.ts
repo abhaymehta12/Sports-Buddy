@@ -11,6 +11,9 @@ import { AddEventComponent } from "../app/features/add-event/addevent.component"
 import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { FirebaseService } from './firebase.service';
 
 import { SharedModule } from "./shared.module";
 
@@ -29,9 +32,11 @@ import { SharedModule } from "./shared.module";
     BrowserAnimationsModule,
     SharedModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

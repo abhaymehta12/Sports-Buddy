@@ -22,6 +22,7 @@ export class AddEventComponent {
             category: [this.data.category || '', Validators.required],
             sport_place: [this.data.sport_place || '', Validators.required],
             location: [this.data.location || '', Validators.required],
+            landmark: [this.data.landmark || '', Validators.required],
             images: [this.data.images || []]
         });
     }
