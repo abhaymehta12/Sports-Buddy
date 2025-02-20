@@ -3,22 +3,28 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseService } from '../../firebase.service';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { CloudinaryUploadService } from '../../cloudinary-upload.service';
 
 @Component({
   selector: 'app-signUp',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-
 export class SignUpComponent {
   formGroup: FormGroup;
-  errorMessage: string = 'Please provide all details.';
+  errorMessage: string = '';
   hide: boolean = true;
   imagePreview: string | ArrayBuffer | null = null;
   file: File | null = null;
+  loading: boolean = false
 
-  constructor(private fb: FormBuilder, private myroute: Router, private _snackBar: MatSnackBar, private firebaseService: FirebaseService, private storage: Storage) {
+  constructor(
+    private fb: FormBuilder,
+    private myroute: Router,
+    private _snackBar: MatSnackBar,
+    private firebaseService: FirebaseService,
+    private cloudinaryService: CloudinaryUploadService
+  ) {
     this.formGroup = this.fb.group({
       firstStep: this.fb.group({
         name: ['', Validators.required],
@@ -32,51 +38,66 @@ export class SignUpComponent {
     });
   }
 
-  togglePassword() {
+  togglePassword(): void {
     this.hide = !this.hide;
   }
 
-  async submitForm() {
+  async submitForm(): Promise<void> {
     if (this.formGroup.valid && this.file) {
-      const userData = {...this.formGroup.value.firstStep, ...this.formGroup.value.secondStep};
-      const storageRef = ref(this.storage, `images/${this.file.name}`);
-      await uploadBytes(storageRef, this.file);
-      const downloadURL = await getDownloadURL(storageRef);
-      console.log(downloadURL)
-      // this.firebaseService.addUserToFirestore(userData).then(() => {
-      //   this.openSnackBar('Signed up successfully!')
-      // }).catch((error) => {
-      //   this.openSnackBar('Error signing up: ' + error.message);
-      // });
-      //this.signIn()
+      this.loading = true;
+      const userData = { ...this.formGroup.value.firstStep, ...this.formGroup.value.secondStep };
+      try {
+        let resp: any = await this.firebaseService.addUserToFirestore(userData);
+        let msg: any = 'Signed up successfully!'
+        if (resp && resp.doc_id) {
+          const imageData = await this.cloudinaryService.uploadImage(this.file);
+          this.firebaseService.saveImage({ ...imageData, ...resp });
+          this.signIn();
+        } else {
+          msg = resp
+        }
+        this.openSnackBar(msg);
+      } catch (error: any) {
+        this.openSnackBar('Try again later');
+      }
     } else {
-      this.openSnackBar('Please provide all details.')
+      this.openSnackBar('Please provide all details.');
     }
+    this.loading = false;
   }
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
-      this.file = file
-      // Generate a preview for the selected image
+      this.file = file;
+
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = reader.result; // Set image preview
+        this.imagePreview = reader.result;
       };
       reader.readAsDataURL(file);
     }
   }
 
-  signIn() {
+  signIn(): void {
+    this.resetForm();
     this.myroute.navigate(['/signin']);
   }
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string): void {
     this._snackBar.open(message, 'X', {
       duration: 2000,
       verticalPosition: 'top',
       panelClass: ['snackbar-style'],
     });
+  }
+
+  resetForm(): void {
+    this.formGroup.reset();
+    this.file = null;
+    this.imagePreview = null;
+    this.hide = true;
+    this.loading = false;
   }
 }

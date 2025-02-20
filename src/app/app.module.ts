@@ -12,7 +12,6 @@ import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage } from '@angular/fire/storage';
 import { FirebaseService } from './firebase.service';
 
 import { SharedModule } from "./shared.module";
@@ -33,8 +32,7 @@ import { SharedModule } from "./shared.module";
     SharedModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideFirestore(() => getFirestore())
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]

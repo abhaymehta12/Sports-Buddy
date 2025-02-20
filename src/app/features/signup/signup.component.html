@@ -62,8 +62,12 @@
         </mat-stepper>
 
         <mat-card-actions class="btn-wrap">
-            <button class="signin" type="button" (click)="signIn()" mat-raised-button>Sign In</button>
-            <button class="submit" type="submit" mat-raised-button [disabled]="formGroup.invalid">Submit</button>
+            <button class="signin" type="button" (click)="signIn()" mat-raised-button
+                [disabled]="loading">SignIn</button>
+            <button class="submit" type="submit" mat-raised-button [disabled]="formGroup.invalid || loading">
+                <mat-spinner *ngIf="loading" diameter="20" color="primary"></mat-spinner>
+                <span *ngIf="!loading">Submit</span>
+            </button>
         </mat-card-actions>
     </form>
 </mat-card>

@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     MatMenuModule,
     MatDialogModule,
-    MatSliderModule
+    MatSliderModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -61,7 +63,8 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     MatMenuModule,
     MatDialogModule,
-    MatSliderModule
+    MatSliderModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }
