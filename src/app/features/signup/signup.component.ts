@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -81,7 +81,6 @@ export class SignUpComponent {
   }
 
   signIn(): void {
-    this.resetForm();
     this.myroute.navigate(['/signin']);
   }
 
@@ -91,13 +90,5 @@ export class SignUpComponent {
       verticalPosition: 'top',
       panelClass: ['snackbar-style'],
     });
-  }
-
-  resetForm(): void {
-    this.formGroup.reset();
-    this.file = null;
-    this.imagePreview = null;
-    this.hide = true;
-    this.loading = false;
   }
 }

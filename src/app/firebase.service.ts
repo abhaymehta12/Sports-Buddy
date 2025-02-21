@@ -1,11 +1,40 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  private userDataSubject = new BehaviorSubject<any>(null);
+  userData$ = this.userDataSubject.asObservable();
+
   constructor(private firestore: Firestore) { }
+
+  setUserData(data: any) {
+    this.userDataSubject.next(data);
+  }
+
+  clearUserData() {
+    this.userDataSubject.next(null);
+  }
+
+  async addGoolgeUser(userData: any): Promise<any> {
+    try {
+      const userRef = collection(this.firestore, 'users');
+      const queryuser = await getDocs(query(userRef, where('provider_id', '==', userData.provider_id)));
+      if (queryuser.empty) {
+        const resp = await addDoc(userRef, userData);
+        const userDocRef = doc(this.firestore, 'users', resp.id);
+        await updateDoc(userDocRef, {
+          id: resp.id
+        });
+      }
+      this.setUserData(userData)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async addUserToFirestore(userData: any): Promise<any> {
     try {
@@ -25,7 +54,7 @@ export class FirebaseService {
         return { doc_id: resp.id }
       }
     } catch (error) {
-      console.log('Error adding user to Firestore: ', error);
+      console.log(error);
     }
   }
   async saveImage(data: any): Promise<void> {
@@ -41,6 +70,28 @@ export class FirebaseService {
       console.log(error);
     }
   }
+  async login(userData: any): Promise<any> {
+    try {
+      const userRef = collection(this.firestore, 'users');
+      const querydata = await getDocs(query(userRef, where('password', '==', userData.password)));
+      if (querydata.empty) {
+        return "Invalid credentials."
+      } else {
+        querydata.forEach((doc) => {
+          let data = {
+            name: doc.data().name,
+            address: doc.data().address,
+            contact: doc.data().contact,
+            imageData: doc.data().imageData
+          }
+          localStorage.setItem("id", doc.data().id)
+          this.setUserData(data)
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async getUsersFromFirestore(): Promise<any[]> {
     try {
       const userRef = collection(this.firestore, 'users');
@@ -51,7 +102,7 @@ export class FirebaseService {
       });
       return usersList;
     } catch (error) {
-      console.error('Error fetching users from Firestore: ', error);
+      console.log(error);
       return [];
     }
   }

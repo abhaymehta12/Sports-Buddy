@@ -20,7 +20,7 @@
       </mat-form-field>
       <mat-card-actions class="btn-wrap">
         <button class="signup" type="button" (click)="signUp()" mat-raised-button>Sign Up</button>
-        <button class="signin" type="submit" mat-raised-button [disabled]="fg.invalid">Sign In</button>
+        <button class="signin" type="submit" mat-raised-button [disabled]="fg.invalid || loading">Sign In</button>
       </mat-card-actions>
     </form>
     <mat-divider></mat-divider>

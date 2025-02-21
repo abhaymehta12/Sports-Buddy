@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
   Sports Buddy
-  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+  <button *ngIf="userData" mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
   <mat-menu #menu="matMenu">
+    <button *ngIf="userData" class="border profileLink" mat-menu-item>{{userData.name}}
+      <mat-icon class="avatar" *ngIf="userData && userData.imageData">
+        <img [src]="userData.imageData.url" alt="User Avatar" />
+      </mat-icon>
+      <mat-icon *ngIf="userData && !userData.imageData">account_circle</mat-icon>
+    </button>
     <button style="text-align: center;" class="border" (click)="openDialog()" mat-menu-item>Add Event</button>
-    <button style="text-align: center;" mat-menu-item>Log Out</button>
+    <button style="text-align: center;" mat-menu-item (click)="logOut()">Log Out</button>
   </mat-menu>
 </mat-toolbar>
 

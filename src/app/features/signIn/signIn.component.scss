@@ -2,7 +2,7 @@
     padding: 40px;
     max-width: 400px;
     margin: 0 auto;
-    height: 70%;
+    height: 72%;
     text-align: center;
 }
 
@@ -37,4 +37,15 @@
 .mat-icon {
     margin-bottom: 10px;
     margin-right: 14px;
+}
+
+::ng-deep .snackbar-style {
+    background-color: #ff438b;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+::ng-deep .mat-simple-snackbar-action {
+    color: white;
 }
