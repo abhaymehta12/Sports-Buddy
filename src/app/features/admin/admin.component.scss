@@ -36,3 +36,14 @@ tr.mat-row {
 .mat-form-field {
     width: 236px;
 }
+
+::ng-deep .snackbar-style {
+    background-color: #ff438b;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+::ng-deep .mat-simple-snackbar-action {
+    color: white;
+}

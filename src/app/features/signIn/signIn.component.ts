@@ -65,7 +65,7 @@ export class SignInComponent {
   }
 
   signIn() {
-    this.myroute.navigate(['/user']);
+    this.myroute.navigate(['/admin']);
   }
 
   openSnackBar(message: string): void {

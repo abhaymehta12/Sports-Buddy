@@ -5,6 +5,7 @@ import { FirebaseService } from './firebase.service';
 import { signOut } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { AddEventComponent } from "./features/add-event/addevent.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   title = 'sports-buddy';
   userData: any;
 
-  constructor(private myroute: Router, private firebaseService: FirebaseService, private auth: Auth, private dialog: MatDialog) { }
+  constructor(private myroute: Router, private firebaseService: FirebaseService, private auth: Auth, private _snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.firebaseService.userData$.subscribe(data => {
@@ -29,25 +30,28 @@ export class AppComponent implements OnInit {
       await signOut(this.auth)
     }
     localStorage.removeItem('id');
-    this.firebaseService.clearUserData();
+    this.firebaseService.clearAllData();
     this.myroute.navigate(['/signin']);
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddEventComponent, {
-      data: {
-        event: 'Football Match',
-        sport: 'Football',
-        category: 'Outdoor',
-        sport_place: 'Stadium',
-        location: 'New York',
-        landmark: '',
-        images: []
+    const dialogRef = this.dialog.open(AddEventComponent, { disableClose: true });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        result.user = this.userData.name;
+        result.user_id = this.userData.id;
+        let resp = await this.firebaseService.saveEvent(result);
+        this.openSnackBar(resp);
       }
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog was closed with result:', result);
+  openSnackBar(message: string): void {
+    this._snackBar.open(message, 'X', {
+      duration: 2000,
+      verticalPosition: 'top',
+      panelClass: ['snackbar-style'],
     });
   }
 }

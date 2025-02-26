@@ -1,51 +1,30 @@
 <h2 mat-dialog-title>Add Event</h2>
 <mat-dialog-content>
     <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
-        <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Event</mat-label>
-                <input matInput formControlName="event" required>
-            </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Sport</mat-label>
+            <input matInput formControlName="sport" required>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Sport</mat-label>
-                <input matInput formControlName="sport" required>
-            </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" required>
+        </mat-form-field>
 
-        <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Category</mat-label>
-                <input matInput formControlName="category" required>
-            </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Sport Place</mat-label>
+            <input matInput formControlName="sport_place" required>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Sport Place</mat-label>
-                <input matInput formControlName="sport_place" required>
-            </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Location</mat-label>
-                <input matInput formControlName="location" required>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Landmark</mat-label>
-                <input matInput formControlName="landmark" required>
-            </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Images</mat-label>
-                <input matInput formControlName="images">
-            </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" required>
+        </mat-form-field>
 
         <div mat-dialog-actions>
-            <button mat-raised-button type="submit" [disabled]="!eventForm.valid" class="btn-submit">Submit</button>
+            <button *ngIf="!data" mat-raised-button type="submit" [disabled]="!eventForm.valid" class="btn-submit">Submit</button>
+            <button *ngIf="data" mat-raised-button type="submit" [disabled]="!eventForm.valid" class="btn-submit">Update</button>
+            <button *ngIf="data" mat-raised-button type="button" (click)="deleteEvent()" class="btn-submit">Delete</button>
             <button mat-raised-button type="button" (click)="closeDialog()">Cancel</button>
         </div>
     </form>

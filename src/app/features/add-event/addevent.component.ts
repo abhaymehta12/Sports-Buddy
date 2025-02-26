@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./addevent.component.scss']
 })
 export class AddEventComponent {
-    eventForm: FormGroup
+    eventForm: FormGroup;
 
     constructor(
         public dialogRef: MatDialogRef<AddEventComponent>,
@@ -17,27 +17,25 @@ export class AddEventComponent {
     ) {
 
         this.eventForm = this.fb.group({
-            event: [this.data.event || '', Validators.required],
-            sport: [this.data.sport || '', Validators.required],
-            category: [this.data.category || '', Validators.required],
-            sport_place: [this.data.sport_place || '', Validators.required],
-            location: [this.data.location || '', Validators.required],
-            landmark: [this.data.landmark || '', Validators.required],
-            images: [this.data.images || []]
+            sport: [this.data ? this.data.sport : '', Validators.required],
+            category: [this.data ? this.data.category : '', Validators.required],
+            sport_place: [this.data ? this.data.sport_place : '', Validators.required],
+            location: [this.data ? this.data.location : '', Validators.required]
         });
     }
 
-    // Handle form submission
     onSubmit(): void {
-        if (this.eventForm.valid) {
-            console.log('Form Submitted!', this.eventForm.value);
-            this.dialogRef.close(this.eventForm.value);
-        } else {
-            console.log('Form is not valid');
-        }
+        this.dialogRef.close(this.eventForm.value);
     }
 
     closeDialog(): void {
         this.dialogRef.close();
     }
-}
+
+    deleteEvent(): void {
+        let obj = {
+            del_id: this.data.id
+        }
+        this.dialogRef.close(obj);
+    }
+}           
