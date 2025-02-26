@@ -25,6 +25,7 @@ export class UserComponent implements OnInit {
   selected: string = 'Table Tennis';
   sliderValue: number = 1.5;
   eventData: any;
+  userData:any;
   editingData: any = null;
 
   dataSource: MatTableDataSource<SportElement> = new MatTableDataSource<SportElement>([]);
@@ -47,6 +48,9 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   async ngOnInit() {
+    this.firebaseService.userData$.subscribe(data => {
+      this.userData = data;
+    });
     this.firebaseService.eventData$.subscribe(data => {
       if (data) {
         this.eventData = data;

@@ -28,7 +28,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="clickedRows(row)"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.disabled]="row.user_id !== userData.id" (click)="clickedRows(row)"></tr>
             </table>
 
             <!-- MatPaginator -->

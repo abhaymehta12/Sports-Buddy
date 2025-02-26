@@ -159,6 +159,7 @@ export class FirebaseService {
         sport_place: doc.data().sport_place,
         location: doc.data().location,
         id: doc.data().id,
+        user_id: doc.data().user_id
       }));
       this.setEventData(eventList);
     } catch (error) {

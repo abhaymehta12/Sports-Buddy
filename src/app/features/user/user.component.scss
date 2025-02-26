@@ -6,10 +6,6 @@
     cursor: pointer;
 }
 
-.mat-row:hover {
-    background: #ebe3defa;
-}
-
 tr.mat-row {
     height: 40px;
 }
@@ -55,4 +51,12 @@ tr.mat-row {
 
 ::ng-deep .mat-simple-snackbar-action {
     color: white;
+}
+
+tr.disabled {
+    pointer-events: none;
+}
+
+tr:not(.disabled):hover {
+    background-color: #f0f0f0;
 }
