@@ -25,8 +25,10 @@ export class UserComponent implements OnInit {
   selected: string = 'Table Tennis';
   sliderValue: number = 1.5;
   eventData: any;
-  userData:any;
+  userData: any;
   editingData: any = null;
+  currentCard: any;
+  allusers: any;
 
   dataSource: MatTableDataSource<SportElement> = new MatTableDataSource<SportElement>([]);
 
@@ -97,6 +99,38 @@ export class UserComponent implements OnInit {
         this.openSnackBar(resp);
       }
     });
+  }
+
+  async matchPlayers() {
+    const resp = await this.firebaseService.getUsersFromFirestore();
+    this.allusers = resp;
+    this.currentCard = resp[0];
+    let obj = {
+      data: {
+        sport: this.selected,
+        level: this.sliderValue
+      },
+      doc_id: this.userData.id
+    }
+    this.firebaseService.addUserSport(obj)
+  }
+
+  swipeRight() {
+    const index = this.allusers.findIndex((obj: any) => obj.id === this.currentCard.id);
+    if (!index) {
+      this.currentCard = this.allusers[this.allusers.length - 1];
+    } else {
+      this.currentCard = this.allusers[index - 1];
+    }
+  }
+
+  swipeLeft() {
+    const index = this.allusers.findIndex((obj: any) => obj.id === this.currentCard.id);
+    if (index === (this.allusers.length - 1)) {
+      this.currentCard = this.allusers[0];
+    } else {
+      this.currentCard = this.allusers[index + 1];
+    }
   }
 
   openSnackBar(message: string): void {

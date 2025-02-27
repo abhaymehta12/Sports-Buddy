@@ -140,7 +140,14 @@ export class FirebaseService {
       const querySnapshot = await getDocs(userRef);
       const usersList: any[] = [];
       querySnapshot.forEach((doc) => {
-        usersList.push(doc.data());
+        let data = {
+          name: doc.data().name,
+          imageData: doc.data().imageData,
+          id: doc.data().id,
+          sport: doc.data().sport,
+          level: doc.data().level
+        }
+        usersList.push(data);
       });
       return usersList;
     } catch (error) {
@@ -162,6 +169,14 @@ export class FirebaseService {
         user_id: doc.data().user_id
       }));
       this.setEventData(eventList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async addUserSport(data: any): Promise<void> {
+    try {
+      const userDocRef = doc(this.firestore, 'users', data.doc_id);
+      await updateDoc(userDocRef, data.data);
     } catch (error) {
       console.log(error);
     }
