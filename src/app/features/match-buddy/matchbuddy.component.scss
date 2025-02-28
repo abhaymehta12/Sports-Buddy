@@ -1,0 +1,111 @@
+.secondTab {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.secondTab span {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-select {
+    width: 214px;
+    border: 1px solid #ebe3defa;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.sliderWrap {
+    width: 300px;
+}
+
+@media (max-width: 560px) {
+    .secondTab {
+        flex-direction: column;
+    }
+
+    .sliderWrap {
+        margin-top: 30px;
+    }
+}
+
+.match-btn {
+    border: 1px solid;
+    padding: 0px 30px;
+    background: darksalmon;
+}
+
+.slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+    .btn-right,
+    .btn-left {
+        border-radius: 50%;
+        border: 1px solid;
+        height: 60px;
+        margin: 0 10px;
+        transition: 0.6s ease;
+    }
+
+    .btn-right:hover,
+    .btn-left:hover {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 900px) {
+
+        .btn-right,
+        .btn-left {
+            margin: 0 5px;
+            position: absolute;
+            z-index: 9;
+            border: none;
+        }
+
+        .btn-right {
+            right: 10px;
+        }
+
+        .btn-left {
+            left: 10px;
+        }
+    }
+}
+
+.card {
+    width: 36%;
+    height: 400px;
+    text-align: center;
+    padding-top: 0px;
+}
+
+@media (max-width: 900px) {
+    .card {
+        width: 90%;
+    }
+}
+
+.img-wrap {
+    max-width: 300px;
+    height: 300px;
+    margin: auto;
+}
+
+.lets-play {
+    border: 1px solid;
+    padding: 0 5px;
+    background: darksalmon;
+}
+
+.card-info {
+    margin-bottom: 2px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-family: cursive;
+}

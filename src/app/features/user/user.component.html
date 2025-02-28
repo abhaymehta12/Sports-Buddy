@@ -36,41 +36,7 @@
             </mat-paginator>
         </mat-tab>
         <mat-tab label="Match Buddy">
-            <div class="secondTab">
-                <span>
-                    <mat-label>Sports</mat-label>
-                    <mat-select [(value)]="selected">
-                        <mat-option value="Football">Football</mat-option>
-                        <mat-option value="Badminton">Badminton</mat-option>
-                        <mat-option value="Table Tennis">Table Tennis</mat-option>
-                        <mat-option value="Lawn Tennis">Lawn Tennis</mat-option>
-                        <mat-option value="Cricket">Cricket</mat-option>
-                        <mat-option value="Volley Ball">Volley Ball</mat-option>
-                    </mat-select>
-                </span>
-                <span class="sliderWrap">
-                    <mat-label style="padding-left: 9px;">Self-Rating: {{ sliderValue }}</mat-label>
-                    <mat-slider min="1" max="10" step="0.5" [(ngModel)]="sliderValue">
-                    </mat-slider>
-                </span>
-                <span>
-                    <button class="match-btn" type="button" (click)="matchPlayers()" mat-raised-button>Match</button>
-                </span>
-            </div>
-            <div class="slider" *ngIf="currentCard">
-                <button class="btn-left" (click)="swipeLeft()"
-                    mat-button><mat-icon>keyboard_arrow_left</mat-icon></button>
-                <mat-card class="card">
-                    {{currentCard.name}}
-                    <div class="img-wrap"><img [src]="currentCard.imageData.url" alt="User Avatar"
-                            style="width:100%;height:100%;" /></div>
-                    <mat-card-content class="card-info" *ngIf="currentCard.sport">{{ currentCard.sport }}, Rating: {{
-                        currentCard.level }}</mat-card-content>
-                    <mat-card-actions><button class="lets-play" mat-button>Let's Play</button></mat-card-actions>
-                </mat-card>
-                <button class="btn-right" (click)="swipeRight()"
-                    mat-button><mat-icon>keyboard_arrow_right</mat-icon></button>
-            </div>
+            <app-matchbuddy [userData]="userData"></app-matchbuddy>
         </mat-tab>
     </mat-tab-group>
 </mat-card>

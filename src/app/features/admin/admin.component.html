@@ -35,34 +35,8 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of sports data">
             </mat-paginator>
         </mat-tab>
-        <mat-tab label="Sports Availability">
-            <div class="secondTab">
-                <span>
-                    <mat-label>Sports</mat-label>
-                    <mat-select [(value)]="selected" multiple>
-                        <mat-option value="Football">Football</mat-option>
-                        <mat-option value="Badminton">Badminton</mat-option>
-                        <mat-option value="Table Tennis">Table Tennis</mat-option>
-                        <mat-option value="Lawn Tennis">Lawn Tennis</mat-option>
-                        <mat-option value="Cricket">Cricket</mat-option>
-                        <mat-option value="Volley Ball">Volley Ball</mat-option>
-                    </mat-select>
-                </span>
-                <div style="display:flex;gap:2%;">
-                    <span>
-                        <mat-label>Area</mat-label>
-                        <mat-form-field appearance="outline">
-                            <input matInput [(ngModel)]="area" required>
-                        </mat-form-field>
-                    </span>
-                    <span>
-                        <mat-label>State</mat-label>
-                        <mat-form-field appearance="outline">
-                            <input matInput [(ngModel)]="state" required>
-                        </mat-form-field>
-                    </span>
-                </div>
-            </div>
+        <mat-tab label="Match Buddy">
+            <app-matchbuddy [userData]="userData"></app-matchbuddy>
         </mat-tab>
     </mat-tab-group>
 </mat-card>

@@ -139,15 +139,18 @@ export class FirebaseService {
       const userRef = collection(this.firestore, 'users');
       const querySnapshot = await getDocs(userRef);
       const usersList: any[] = [];
+      const currentUserData = this.userDataSubject.getValue();
       querySnapshot.forEach((doc) => {
-        let data = {
-          name: doc.data().name,
-          imageData: doc.data().imageData,
-          id: doc.data().id,
-          sport: doc.data().sport,
-          level: doc.data().level
+        if (currentUserData && currentUserData.id !== doc.data().id) {
+          let data = {
+            name: doc.data().name,
+            imageData: doc.data().imageData,
+            id: doc.data().id,
+            sport: doc.data().sport,
+            level: doc.data().level
+          }
+          usersList.push(data);
         }
-        usersList.push(data);
       });
       return usersList;
     } catch (error) {

@@ -22,10 +22,8 @@ interface SportElement {
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  area: string = '';
-  state: string = '';
-  selected: object = ['Table Tennis'];
   eventData: any;
+  userData: any;
   editingData: any = null;
 
   dataSource: MatTableDataSource<SportElement> = new MatTableDataSource<SportElement>([]);
@@ -48,6 +46,9 @@ export class AdminComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   async ngOnInit() {
+    this.firebaseService.userData$.subscribe(data => {
+      this.userData = data;
+    });
     this.firebaseService.eventData$.subscribe(data => {
       if (data) {
         this.eventData = data;

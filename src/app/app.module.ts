@@ -8,6 +8,7 @@ import { UserComponent } from "../app/features/user/user.component";
 import { SignInComponent } from "../app/features/signIn/signIn.component";
 import { SignUpComponent } from "../app/features/signup/signup.component";
 import { AddEventComponent } from "../app/features/add-event/addevent.component";
+import { MatchBuddyComponent } from "../app/features/match-buddy/matchbuddy.component";
 import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -23,7 +24,8 @@ import { SharedModule } from "./shared.module";
     SignUpComponent,
     AdminComponent,
     UserComponent,
-    AddEventComponent
+    AddEventComponent,
+    MatchBuddyComponent
   ],
   imports: [
     BrowserModule,

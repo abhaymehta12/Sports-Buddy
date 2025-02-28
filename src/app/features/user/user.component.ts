@@ -22,13 +22,9 @@ interface SportElement {
 })
 
 export class UserComponent implements OnInit {
-  selected: string = 'Table Tennis';
-  sliderValue: number = 1.5;
   eventData: any;
   userData: any;
   editingData: any = null;
-  currentCard: any;
-  allusers: any;
 
   dataSource: MatTableDataSource<SportElement> = new MatTableDataSource<SportElement>([]);
 
@@ -78,9 +74,14 @@ export class UserComponent implements OnInit {
     }
   }
 
-  clickedRows(row: SportElement): void {
-    this.editingData = row
-    this.openDialog(row);
+  clickedRows(row: any): void {
+    if (this.userData.id === row.user_id) {
+      this.editingData = row
+      this.openDialog(row);
+    } else {
+      const url = "https://www.google.com/maps?q=" + encodeURIComponent(row.location);
+      window.open(url, "_blank");
+    }
   }
 
   openDialog(param: object): void {
@@ -99,38 +100,6 @@ export class UserComponent implements OnInit {
         this.openSnackBar(resp);
       }
     });
-  }
-
-  async matchPlayers() {
-    const resp = await this.firebaseService.getUsersFromFirestore();
-    this.allusers = resp;
-    this.currentCard = resp[0];
-    let obj = {
-      data: {
-        sport: this.selected,
-        level: this.sliderValue
-      },
-      doc_id: this.userData.id
-    }
-    this.firebaseService.addUserSport(obj)
-  }
-
-  swipeRight() {
-    const index = this.allusers.findIndex((obj: any) => obj.id === this.currentCard.id);
-    if (!index) {
-      this.currentCard = this.allusers[this.allusers.length - 1];
-    } else {
-      this.currentCard = this.allusers[index - 1];
-    }
-  }
-
-  swipeLeft() {
-    const index = this.allusers.findIndex((obj: any) => obj.id === this.currentCard.id);
-    if (index === (this.allusers.length - 1)) {
-      this.currentCard = this.allusers[0];
-    } else {
-      this.currentCard = this.allusers[index + 1];
-    }
   }
 
   openSnackBar(message: string): void {

@@ -6,35 +6,8 @@
     cursor: pointer;
 }
 
-.mat-row:hover {
-    background: #ebe3defa;
-}
-
 tr.mat-row {
     height: 40px;
-}
-
-.secondTab {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.secondTab span {
-    display: flex;
-    flex-direction: column;
-}
-
-.mat-select {
-    width: 214px;
-    border: 1px solid #ebe3defa;
-    padding: 10px;
-    border-radius: 6px;
-}
-
-.mat-form-field {
-    width: 236px;
 }
 
 ::ng-deep .snackbar-style {
