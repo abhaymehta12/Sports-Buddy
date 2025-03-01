@@ -1,0 +1,21 @@
+<mat-card class="card">
+    <div class="left-side">
+        <div *ngFor="let chat of chatList">
+            <div *ngIf="userData.id === chat.sender_id" class="row">
+                <mat-icon class="avatar">
+                    <img [src]="chat.reciever_img" alt="User Avatar" />
+                </mat-icon>
+                <span style="margin-left:10px;">{{ chat.reciever }}</span>
+            </div>
+            <div *ngIf="userData.id === chat.reciever_id" class="row">
+                <mat-icon class="avatar">
+                    <img [src]="chat.sender_img" alt="User Avatar" />
+                </mat-icon>
+                <span style="margin-left:10px;">{{ chat.sender }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+
+    </div>
+</mat-card>

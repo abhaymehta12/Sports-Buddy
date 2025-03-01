@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, deleteDoc, Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,10 @@ import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, d
 export class FirebaseService {
   private userDataSubject = new BehaviorSubject<any>(null);
   private eventDataSubject = new BehaviorSubject<any>(null);
+  private chatDataSubject = new BehaviorSubject<any>(null);
   userData$ = this.userDataSubject.asObservable();
   eventData$ = this.eventDataSubject.asObservable();
+  chatData$ = this.chatDataSubject.asObservable();
 
   constructor(private firestore: Firestore) { }
 
@@ -21,9 +23,14 @@ export class FirebaseService {
     this.eventDataSubject.next(data);
   }
 
+  setchatData(data: any) {
+    this.chatDataSubject.next(data);
+  }
+
   clearAllData() {
     this.userDataSubject.next(null);
     this.eventDataSubject.next(null);
+    this.chatDataSubject.next(null);
   }
 
   async addGoolgeUser(userData: any): Promise<void> {
@@ -37,7 +44,10 @@ export class FirebaseService {
           id: resp.id
         });
       }
-      this.setUserData(userData)
+      queryuser.forEach((doc) => {
+        userData.id = doc.data().id;
+      });
+      this.setUserData(userData);
     } catch (error) {
       console.log(error);
     }
@@ -101,10 +111,10 @@ export class FirebaseService {
   }
   async saveEvent(data: any): Promise<any> {
     try {
-      const userRef = collection(this.firestore, 'events');
-      const resp = await addDoc(userRef, data);
-      const userDocRef = doc(this.firestore, 'events', resp.id);
-      await updateDoc(userDocRef, {
+      const eventRef = collection(this.firestore, 'events');
+      const resp = await addDoc(eventRef, data);
+      const eventDocRef = doc(this.firestore, 'events', resp.id);
+      await updateDoc(eventDocRef, {
         id: resp.id
       });
       this.getAllevents();
@@ -116,8 +126,8 @@ export class FirebaseService {
   }
   async updateEvent(data: any): Promise<any> {
     try {
-      const userDocRef = doc(this.firestore, 'events', data.id);
-      await updateDoc(userDocRef, data);
+      const eventDocRef = doc(this.firestore, 'events', data.id);
+      await updateDoc(eventDocRef, data);
       this.getAllevents();
       return 'Event updated successfully!';
     } catch (error) {
@@ -160,8 +170,8 @@ export class FirebaseService {
   }
   async getAllevents(): Promise<void> {
     try {
-      const userRef = collection(this.firestore, 'events');
-      const querySnapshot = await getDocs(userRef);
+      const eventRef = collection(this.firestore, 'events');
+      const querySnapshot = await getDocs(eventRef);
       const eventList = querySnapshot.docs.map((doc, index) => ({
         'S. no': index + 1,
         sport: doc.data().sport,
@@ -180,6 +190,35 @@ export class FirebaseService {
     try {
       const userDocRef = doc(this.firestore, 'users', data.doc_id);
       await updateDoc(userDocRef, data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getChats(id: string): Promise<void> {
+    try {
+      const chatsRef = collection(this.firestore, 'chats');
+      const [chatsSnapshot1, chatsSnapshot2] = await Promise.all([
+        getDocs(query(chatsRef, where('reciever_id', '==', id))),
+        getDocs(query(chatsRef, where('sender_id', '==', id)))
+      ]);
+      const chatList: any[] = [
+        ...chatsSnapshot1.docs.map((doc) => doc.data()),
+        ...chatsSnapshot2.docs.map((doc) => doc.data())
+      ];
+      this.setchatData(chatList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async saveChats(data: any): Promise<void> {
+    try {
+      const chatRef = collection(this.firestore, 'chats');
+      data.time = Timestamp.now();
+      const resp = await addDoc(chatRef, data);
+      const chatDocRef = doc(this.firestore, 'chats', resp.id);
+      await updateDoc(chatDocRef, {
+        id: resp.id
+      });
     } catch (error) {
       console.log(error);
     }

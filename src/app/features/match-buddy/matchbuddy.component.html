@@ -39,7 +39,7 @@
             {{ currentCard.sport }}, Rating: {{ currentCard.level }}
         </mat-card-content>
         <mat-card-actions>
-            <button class="lets-play" mat-button>Let's Play</button>
+            <button class="lets-play" (click)="startChat()" mat-button>Let's Play</button>
         </mat-card-actions>
     </mat-card>
 

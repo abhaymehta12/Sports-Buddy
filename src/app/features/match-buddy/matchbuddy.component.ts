@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FirebaseService } from '../../firebase.service';
 
 @Component({
@@ -46,5 +46,18 @@ export class MatchBuddyComponent {
         } else {
             this.currentCard = this.allusers[index + 1];
         }
+    }
+
+    startChat() {
+        let obj = {
+            sender_id: this.userData.id,
+            sender: this.userData.name,
+            reciever: this.currentCard.name,
+            reciever_id: this.currentCard.id,
+            reciever_img: this.currentCard.imageData.url,
+            sender_img: this.userData.imageData.url,
+            message: "Lets Play"
+        }
+        this.firebaseService.saveChats(obj)
     }
 }
