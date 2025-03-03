@@ -9,6 +9,10 @@ import { FirebaseService } from '../../firebase.service';
 export class ChatComponent implements OnInit {
   @Input() userData: any;
   chatList: any[] = [];
+  myMessages: any[] = [];
+  chatMessages: any[] = [];
+  message: string = '';
+  selected: any = null;
 
   constructor(private firebaseService: FirebaseService) { }
 
@@ -26,6 +30,7 @@ export class ChatComponent implements OnInit {
             }
           }
         });
+        this.myMessages = data
       }
     });
 
@@ -34,5 +39,20 @@ export class ChatComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching events:', error);
     }
+  }
+
+  openChat(param: any) {
+    this.selected = param;
+    this.chatMessages = this.myMessages.filter((el: any) =>
+      (param.sender_id === el.sender_id && param.reciever_id === el.reciever_id) ||
+      (param.sender_id === el.reciever_id && param.reciever_id === el.sender_id))
+
+    this.chatMessages.forEach((ele: any) => {
+      const date = ele.time.toDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      ele.format_time = `${hours}:${minutes}`;
+    })
+    this.chatMessages.sort((a, b) => a.time.toDate() - b.time.toDate());
   }
 }

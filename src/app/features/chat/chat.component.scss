@@ -2,19 +2,26 @@
     padding: 20px;
     max-width: 700px;
     margin: 0 auto;
-    height: 72vh;
+    height: 76vh;
     display: flex;
+    padding-bottom: 0px;
 }
 
 .left-side {
     width: 35%;
     border: 1px solid;
-    height: 100%;
+    background-color: azure;
 }
 
 .right-side {
     width: 65%;
-    height: 100%;
+    padding: 5px;
+    border: 1px solid;
+    border-left: 0px;
+    position: relative;
+    background-color: azure;
+    overflow: auto;
+    scrollbar-width: thin;
 }
 
 .row {
@@ -35,4 +42,41 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.messageBox {
+    width: 98%;
+    position: absolute;
+    bottom: 3px;
+    height: 40px;
+    text-indent: 18px;
+    background: #efcc45;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.msgBox {
+    max-width: 85%;
+    min-width: 20%;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background-color: white;
+}
+
+.othersMessage {
+    justify-self: flex-start;
+}
+
+.myMessage {
+    justify-self: flex-end;
+
+}
+
+.time {
+    font-size: 10px;
 }
