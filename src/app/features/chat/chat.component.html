@@ -3,23 +3,26 @@
         <div *ngFor="let detail of chatList" (click)="openChat(detail)" style="cursor:pointer;">
             <div *ngIf="userData.id === detail.sender_id" class="row">
                 <mat-icon class="avatar">
-                    <img [src]="detail.reciever_img" alt="User Avatar" />
+                    <img [src]="detail.reciever_img" />
                 </mat-icon>
                 <span style="margin-left:10px;">{{ detail.reciever }}</span>
             </div>
             <div *ngIf="userData.id === detail.reciever_id" class="row">
                 <mat-icon class="avatar">
-                    <img [src]="detail.sender_img" alt="User Avatar" />
+                    <img [src]="detail.sender_img" />
                 </mat-icon>
                 <span style="margin-left:10px;">{{ detail.sender }}</span>
             </div>
         </div>
     </div>
-    <div class="right-side" *ngIf="selected">
-        <div *ngFor="let chat of chatMessages" class="msgBox"
-            [ngClass]="chat.sender_id === userData.id ? 'myMessage' : 'othersMessage'">
-            {{ chat.message }} <i class="time">{{ chat.format_time}}</i>
+    <div class="right-side">
+        <div class="msgContainer" *ngIf="selected">
+            <div *ngFor="let chat of chatMessages" class="msgBox"
+                [ngClass]="chat.sender_id === userData.id ? 'myMessage' : 'othersMessage'">
+                {{ chat.message }} <i class="time">{{ chat.format_time}}</i>
+            </div>
         </div>
-        <input matInput [(ngModel)]="message" placeholder="Message" class="messageBox">
+        <mat-icon class="send" (click)="sendChat()">send</mat-icon>
+        <input matInput [(ngModel)]="message" placeholder="Message" class="messageInputBox">
     </div>
 </mat-card>

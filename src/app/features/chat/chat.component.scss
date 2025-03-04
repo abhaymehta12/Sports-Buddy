@@ -11,6 +11,8 @@
     width: 35%;
     border: 1px solid;
     background-color: azure;
+    overflow: auto;
+    scrollbar-width: thin;
 }
 
 .right-side {
@@ -20,14 +22,12 @@
     border-left: 0px;
     position: relative;
     background-color: azure;
-    overflow: auto;
-    scrollbar-width: thin;
 }
 
 .row {
     display: flex;
     align-items: center;
-    padding: 5px 15px;
+    padding: 5px 9px;
     border-bottom: 1px solid;
 }
 
@@ -44,7 +44,13 @@
     object-fit: cover;
 }
 
-.messageBox {
+.msgContainer {
+    height: 90%;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+.messageInputBox {
     width: 98%;
     position: absolute;
     bottom: 3px;
@@ -79,4 +85,29 @@
 
 .time {
     font-size: 10px;
+    margin-left: 5px;
+}
+
+.send {
+    position: absolute;
+    right: 12px;
+    bottom: 11px;
+    z-index: 1;
+    color: #18160982;
+    cursor: pointer;
+    font-size: 27px;
+}
+
+@media (max-width: 560px) {
+    .card {
+        padding: 0px;
+    }
+
+    .left-side {
+        scrollbar-width: none;
+    }
+
+    .msgContainer {
+        scrollbar-width: none;
+    }
 }

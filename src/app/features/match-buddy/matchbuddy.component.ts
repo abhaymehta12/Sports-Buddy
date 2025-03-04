@@ -58,6 +58,6 @@ export class MatchBuddyComponent {
             sender_img: this.userData.imageData.url,
             message: "Lets Play"
         }
-        this.firebaseService.saveChats(obj)
+        this.firebaseService.saveChats(obj);
     }
 }
