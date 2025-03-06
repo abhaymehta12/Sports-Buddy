@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FirebaseService } from '../../firebase.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -14,10 +15,13 @@ export class ChatComponent implements OnInit {
   message: string = '';
   selected: any = null;
 
+  private chatDataSubscription: Subscription | null = null;
+
   constructor(private firebaseService: FirebaseService) { }
 
   async ngOnInit() {
-    this.firebaseService.chatData$.subscribe(data => {
+    this.firebaseService.getUpdatedChat(this.userData.id);
+    this.chatDataSubscription = this.firebaseService.chatData$.subscribe(data => {
       if (data && this.userData) {
         data.forEach((ele: any) => {
           if (ele.sender_id === this.userData.id || ele.reciever_id === this.userData.id) {
@@ -33,11 +37,12 @@ export class ChatComponent implements OnInit {
         this.myMessages = data;
       }
     });
+  }
 
-    try {
-      await this.firebaseService.getChats(this.userData.id);
-    } catch (error) {
-      console.error('Error fetching events:', error);
+  ngOnDestroy(): void {
+    this.firebaseService.stopListening();
+    if (this.chatDataSubscription) {
+      this.chatDataSubscription.unsubscribe();
     }
   }
 
@@ -68,8 +73,7 @@ export class ChatComponent implements OnInit {
         message: this.message
       }
       this.message = "";
-      this.firebaseService.saveChats(obj);
-      await this.firebaseService.getChats(this.userData.id);
+      await this.firebaseService.saveChats(obj);
       this.openChat(this.selected);
     }
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, deleteDoc, Timestamp } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, deleteDoc, Timestamp, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,9 @@ export class FirebaseService {
   chatData$ = this.chatDataSubject.asObservable();
 
   constructor(private firestore: Firestore) { }
+
+  private unsubscribeSender: Unsubscribe | null = null;
+  private unsubscribeReceiver: Unsubscribe | null = null;
 
   setUserData(data: any) {
     this.userDataSubject.next(data);
@@ -194,22 +197,6 @@ export class FirebaseService {
       console.log(error);
     }
   }
-  async getChats(id: string): Promise<void> {
-    try {
-      const chatsRef = collection(this.firestore, 'chats');
-      const [chatsSnapshot1, chatsSnapshot2] = await Promise.all([
-        getDocs(query(chatsRef, where('reciever_id', '==', id))),
-        getDocs(query(chatsRef, where('sender_id', '==', id)))
-      ]);
-      const chatList: any[] = [
-        ...chatsSnapshot1.docs.map((doc) => doc.data()),
-        ...chatsSnapshot2.docs.map((doc) => doc.data())
-      ];
-      this.setchatData(chatList);
-    } catch (error) {
-      console.log(error);
-    }
-  }
   async saveChats(data: any): Promise<void> {
     try {
       const chatRef = collection(this.firestore, 'chats');
@@ -221,6 +208,42 @@ export class FirebaseService {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+  getUpdatedChat(userId: string) {
+    try {
+      const chatsRef = collection(this.firestore, 'chats');
+      const senderQuery = query(chatsRef, where('sender_id', '==', userId));
+      const receiverQuery = query(chatsRef, where('reciever_id', '==', userId));
+
+      const allDocs: Map<string, any> = new Map();
+
+      this.unsubscribeSender = onSnapshot(senderQuery, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          allDocs.set(doc.id, { id: doc.id, ...data });
+        });
+        this.setchatData(Array.from(allDocs.values()));
+      });
+
+      this.unsubscribeReceiver = onSnapshot(receiverQuery, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          allDocs.set(doc.id, { id: doc.id, ...data });
+        });
+        this.setchatData(Array.from(allDocs.values()));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  stopListening() {
+    if (this.unsubscribeSender) {
+      this.unsubscribeSender();
+    }
+    if (this.unsubscribeReceiver) {
+      this.unsubscribeReceiver();
     }
   }
 }
