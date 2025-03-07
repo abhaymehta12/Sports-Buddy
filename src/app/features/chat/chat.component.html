@@ -3,15 +3,16 @@
         <div *ngFor="let detail of chatList" (click)="openChat(detail)" style="cursor:pointer;">
             <div *ngIf="userData.id === detail.sender_id" class="row">
                 <mat-icon class="avatar">
-                    <img [src]="detail.reciever_img" />
+                    <img [src]="detail.receiver_img" />
                 </mat-icon>
-                <span style="margin-left:10px;">{{ detail.reciever }}</span>
+                <span class="senderName" [title]="detail.receiver">{{ detail.receiver }}</span>
             </div>
-            <div *ngIf="userData.id === detail.reciever_id" class="row">
+            <div *ngIf="userData.id === detail.receiver_id" class="row">
                 <mat-icon class="avatar">
                     <img [src]="detail.sender_img" />
                 </mat-icon>
-                <span style="margin-left:10px;">{{ detail.sender }}</span>
+                <span class="senderName" [title]="detail.sender">{{ detail.sender }}</span>
+                <img class="newAlert" *ngIf="!detail.seen" src="assets/new_image.png" />
             </div>
         </div>
     </div>

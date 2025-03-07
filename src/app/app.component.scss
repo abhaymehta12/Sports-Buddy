@@ -14,8 +14,15 @@ mat-toolbar {
   text-transform: capitalize;
 }
 
+.userName, .menuFont {
+  white-space: break-spaces;
+  line-height: 18px;
+  font-weight: 500;
+  font-size: medium;
+}
+
 .avatar {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   margin-right: 0px !important;
 }

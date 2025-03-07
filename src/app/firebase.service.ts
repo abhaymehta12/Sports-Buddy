@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, where, deleteDoc, Timestamp, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, writeBatch, where, deleteDoc, Timestamp, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -210,11 +210,30 @@ export class FirebaseService {
       console.log(error);
     }
   }
+  async updateSeenFlags(data: any): Promise<void> {
+    try {
+      const chatRef = collection(this.firestore, 'chats');
+      const chatQuery = query(
+        chatRef,
+        where('sender_id', '==', data.sender),
+        where('receiver_id', '==', data.receiver)
+      );
+      
+      const querySnapshot = await getDocs(chatQuery);
+      const batch = writeBatch(this.firestore);
+      querySnapshot.forEach((doc) => {
+        batch.update(doc.ref, { seen: true });
+      });
+      await batch.commit();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   getUpdatedChat(userId: string) {
     try {
       const chatsRef = collection(this.firestore, 'chats');
       const senderQuery = query(chatsRef, where('sender_id', '==', userId));
-      const receiverQuery = query(chatsRef, where('reciever_id', '==', userId));
+      const receiverQuery = query(chatsRef, where('receiver_id', '==', userId));
 
       const allDocs: Map<string, any> = new Map();
 
@@ -237,7 +256,6 @@ export class FirebaseService {
       console.error(error);
     }
   }
-
   stopListening() {
     if (this.unsubscribeSender) {
       this.unsubscribeSender();

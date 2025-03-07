@@ -1,6 +1,6 @@
 .card {
     padding: 20px;
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
     height: 76vh;
     display: flex;
@@ -27,7 +27,7 @@
 .row {
     display: flex;
     align-items: center;
-    padding: 5px 9px;
+    padding: 9px;
     border-bottom: 1px solid;
 }
 
@@ -96,6 +96,20 @@
     color: #18160982;
     cursor: pointer;
     font-size: 27px;
+}
+
+.senderName {
+    margin-left: 10px;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+.newAlert {
+    width: 40px;
+    position: absolute;
 }
 
 @media (max-width: 560px) {

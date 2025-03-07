@@ -52,9 +52,9 @@ export class MatchBuddyComponent {
         let obj = {
             sender_id: this.userData.id,
             sender: this.userData.name,
-            reciever: this.currentCard.name,
-            reciever_id: this.currentCard.id,
-            reciever_img: this.currentCard.imageData.url,
+            receiver: this.currentCard.name,
+            receiver_id: this.currentCard.id,
+            receiver_img: this.currentCard.imageData.url,
             sender_img: this.userData.imageData.url,
             message: "Lets Play"
         }
