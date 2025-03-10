@@ -6,13 +6,14 @@
                     <img [src]="detail.receiver_img" />
                 </mat-icon>
                 <span class="senderName" [title]="detail.receiver">{{ detail.receiver }}</span>
+                <img *ngIf="!detail.seen" class="newAlert" src="assets/new_image.png" />
             </div>
             <div *ngIf="userData.id === detail.receiver_id" class="row">
                 <mat-icon class="avatar">
                     <img [src]="detail.sender_img" />
                 </mat-icon>
                 <span class="senderName" [title]="detail.sender">{{ detail.sender }}</span>
-                <img class="newAlert" *ngIf="!detail.seen" src="assets/new_image.png" />
+                <img *ngIf="!detail.seen" class="newAlert" src="assets/new_image.png" />
             </div>
         </div>
     </div>

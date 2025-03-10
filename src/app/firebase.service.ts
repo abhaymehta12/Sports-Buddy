@@ -218,7 +218,7 @@ export class FirebaseService {
         where('sender_id', '==', data.sender),
         where('receiver_id', '==', data.receiver)
       );
-      
+
       const querySnapshot = await getDocs(chatQuery);
       const batch = writeBatch(this.firestore);
       querySnapshot.forEach((doc) => {
@@ -236,21 +236,31 @@ export class FirebaseService {
       const receiverQuery = query(chatsRef, where('receiver_id', '==', userId));
 
       const allDocs: Map<string, any> = new Map();
-
-      this.unsubscribeSender = onSnapshot(senderQuery, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          allDocs.set(doc.id, { id: doc.id, ...data });
-        });
-        this.setchatData(Array.from(allDocs.values()));
-      });
+      let senderDocsFetched = false;
+      let receiverDocsFetched = false;
 
       this.unsubscribeReceiver = onSnapshot(receiverQuery, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           allDocs.set(doc.id, { id: doc.id, ...data });
         });
-        this.setchatData(Array.from(allDocs.values()));
+
+        receiverDocsFetched = true;
+        if (senderDocsFetched && receiverDocsFetched) {
+          this.setchatData(Array.from(allDocs.values()));
+        }
+      });
+
+      this.unsubscribeSender = onSnapshot(senderQuery, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          allDocs.set(doc.id, { id: doc.id, ...data });
+        });
+
+        senderDocsFetched = true;
+        if (senderDocsFetched && receiverDocsFetched) {
+          this.setchatData(Array.from(allDocs.values()));
+        }
       });
     } catch (error) {
       console.error(error);

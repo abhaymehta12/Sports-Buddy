@@ -19,11 +19,12 @@ export class ChatComponent implements OnInit {
 
   constructor(private firebaseService: FirebaseService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.firebaseService.getUpdatedChat(this.userData.id);
     this.chatDataSubscription = this.firebaseService.chatData$.subscribe(data => {
       if (!data || !this.userData) return;
       const existingChats = new Set<string>();
+      existingChats.clear();
       const newChats: any[] = [];
       let firstElement: any;
       this.chatList = [];
@@ -32,19 +33,25 @@ export class ChatComponent implements OnInit {
         if (existingChats.has(chatKey)) return;
         existingChats.add(chatKey);
         const haveNewChats = data.some((chat: any) =>
-          chat.sender_id === ele.sender_id &&
-          chat.receiver_id === this.userData.id &&
+          ((chat.sender_id === ele.sender_id &&
+            chat.receiver_id === this.userData.id) || (chat.sender_id === ele.receiver_id &&
+              chat.receiver_id === this.userData.id)) &&
           !chat.seen
         );
         if (haveNewChats) {
           ele.seen = false;
+        } else {
+          ele.seen = true;
         }
         if (this.selected && (this.selected.sender_id === ele.sender_id || this.selected.receiver_id === ele.receiver_id)) {
           firstElement = ele;
+          this.openChat(ele)
         }
-        if (!firstElement) {
+        if (!firstElement || firstElement.id !== ele.id) {
           const position = haveNewChats ? newChats.unshift : newChats.push;
           position.call(newChats, ele);
+        } else {
+
         }
       });
       if (firstElement) {
@@ -79,6 +86,12 @@ export class ChatComponent implements OnInit {
     let obj = {
       receiver: this.userData.id,
       sender: this.userData.id === param.receiver_id ? param.sender_id : param.receiver_id
+    }
+
+    const index = this.chatList.findIndex(item => item.id === param.id);
+    if (index !== -1) {
+      const [item] = this.chatList.splice(index, 1);
+      this.chatList.unshift(item);
     }
     this.firebaseService.updateSeenFlags(obj);
   }
