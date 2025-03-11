@@ -76,6 +76,15 @@ export class FirebaseService {
       console.log(error);
     }
   }
+  async updateUserInFirestore(userData: any): Promise<any> {
+    try {
+      const userDocRef = doc(this.firestore, 'users', userData.id);
+      await updateDoc(userDocRef, userData);
+      this.setUserData(userData)
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async saveImage(data: any): Promise<void> {
     try {
       const userDocRef = doc(this.firestore, 'users', data.doc_id);

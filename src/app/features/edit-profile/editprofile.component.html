@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Update Profile</h2>
+<mat-dialog-content>
+    <form [formGroup]="detailForm" (ngSubmit)="submitForm()" class="event-form">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Contact</mat-label>
+            <input matInput formControlName="contact" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" required>
+        </mat-form-field>
+
+        <!-- File upload -->
+        <div class="uploadWrap">
+            <label class="labelBtn" for="imageUpload">Upload Image</label>
+            <input class="uploadInput" id="imageUpload" type="file" (change)="onFileSelected($event)" accept="image/*"
+                required />
+            <mat-icon matSuffix style="padding: 12px;">cloud_upload</mat-icon>
+        </div>
+        <!-- Preview of selected image -->
+        <div *ngIf="imagePreview">
+            <img [src]="imagePreview" alt="Image Preview" class="image-preview" />
+        </div>
+
+        <div mat-dialog-actions>
+            <button *ngIf="data" mat-raised-button type="submit" [disabled]="loading" class="btn-submit">Update</button>
+            <button class="ml-20" mat-raised-button type="button" (click)="closeDialog()">Cancel</button>
+        </div>
+    </form>
+</mat-dialog-content>

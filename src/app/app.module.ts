@@ -8,6 +8,7 @@ import { UserComponent } from "./features/user/user.component";
 import { SignInComponent } from "./features/signIn/signIn.component";
 import { SignUpComponent } from "./features/signup/signup.component";
 import { AddEventComponent } from "./features/add-event/addevent.component";
+import { EditProfileComponent } from "./features/edit-profile/editprofile.component";
 import { MatchBuddyComponent } from "./features/match-buddy/matchbuddy.component";
 import { ChatComponent } from "./features/chat/chat.component";
 import { environment } from '../environments/environment';
@@ -26,6 +27,7 @@ import { SharedModule } from "./shared.module";
     AdminComponent,
     UserComponent,
     AddEventComponent,
+    EditProfileComponent,
     MatchBuddyComponent,
     ChatComponent
   ],

@@ -5,6 +5,7 @@ import { FirebaseService } from './firebase.service';
 import { signOut } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { AddEventComponent } from "./features/add-event/addevent.component";
+import { EditProfileComponent } from "./features/edit-profile/editprofile.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -34,7 +35,11 @@ export class AppComponent implements OnInit {
     this.myroute.navigate(['/signin']);
   }
 
-  openDialog(): void {
+  openProfileDialog(): void {
+    this.dialog.open(EditProfileComponent, { disableClose: true, data: this.userData });
+  }
+
+  openEventDialog(): void {
     const dialogRef = this.dialog.open(AddEventComponent, { disableClose: true });
 
     dialogRef.afterClosed().subscribe(async result => {

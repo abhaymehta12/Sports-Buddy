@@ -1,5 +1,6 @@
 .form-field {
     width: 100%;
+    font-size: 16px;
     padding-bottom: 12px;
 }
 
@@ -21,14 +22,19 @@
 }
 
 .mat-dialog-content {
-    height: 376px;
+    min-height: 376px;
 }
 
 .mat-dialog-actions {
     justify-content: center;
+    padding: 0px;
 }
 
 .btn-submit {
     background-color: #d7c361;
     margin-right: 10px;
+}
+
+.ml-12 {
+    margin-left: 12px !important;
 }

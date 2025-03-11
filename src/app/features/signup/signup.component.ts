@@ -12,11 +12,10 @@ import { CloudinaryUploadService } from '../../cloudinary-upload.service';
 })
 export class SignUpComponent {
   formGroup: FormGroup;
-  errorMessage: string = '';
   hide: boolean = true;
   imagePreview: string | ArrayBuffer | null = null;
   file: File | null = null;
-  loading: boolean = false
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
