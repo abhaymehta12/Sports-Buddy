@@ -42,7 +42,7 @@ export class SignInComponent {
           provider_id: user.uid
         }
         await this.firebaseService.addGoolgeUser(details)
-        this.signIn();
+        this.signIn(false);
       })
       .catch((error) => {
         console.error('Error signing in with Google: ', error);
@@ -52,20 +52,24 @@ export class SignInComponent {
   async submitForm() {
     this.loading = true;
     let resp: string = await this.firebaseService.login(this.fg.value);
-    if (resp) {
+    if (resp && resp !== 'admin') {
       this.openSnackBar(resp);
       this.loading = false;
       return;
     }
-    this.signIn();
+    this.signIn(resp);
   }
 
   signUp() {
     this.myroute.navigate(['/signup']);
   }
 
-  signIn() {
-    this.myroute.navigate(['/admin']);
+  signIn(role: any) {
+    if (role) {
+      this.myroute.navigate(['/admin']);
+    } else {
+      this.myroute.navigate(['/user']);
+    }
   }
 
   openSnackBar(message: string): void {

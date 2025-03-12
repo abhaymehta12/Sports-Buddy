@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
       await signOut(this.auth)
     }
     localStorage.removeItem('id');
+    localStorage.removeItem('role');
     this.firebaseService.clearAllData();
     this.myroute.navigate(['/signin']);
   }

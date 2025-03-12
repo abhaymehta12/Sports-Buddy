@@ -83,15 +83,16 @@ export class ChatComponent implements OnInit {
       ele.format_time = `${hours}:${minutes}`;
     })
     this.chatMessages.sort((a, b) => a.time.toDate() - b.time.toDate());
-    let obj = {
-      receiver: this.userData.id,
-      sender: this.userData.id === param.receiver_id ? param.sender_id : param.receiver_id
-    }
 
     const index = this.chatList.findIndex(item => item.id === param.id);
     if (index !== -1) {
       const [item] = this.chatList.splice(index, 1);
       this.chatList.unshift(item);
+    }
+
+    let obj = {
+      receiver: this.userData.id,
+      sender: this.userData.id === param.receiver_id ? param.sender_id : param.receiver_id
     }
     this.firebaseService.updateSeenFlags(obj);
   }
@@ -105,7 +106,8 @@ export class ChatComponent implements OnInit {
         receiver_id: this.userData.id === this.selected.receiver_id ? this.selected.sender_id : this.selected.receiver_id,
         receiver_img: this.userData.id === this.selected.receiver_id ? this.selected.sender_img : this.selected.receiver_img,
         sender_img: this.userData.imageData.url,
-        message: this.message
+        message: this.message,
+        seen: false
       }
       this.message = "";
       await this.firebaseService.saveChats(obj);

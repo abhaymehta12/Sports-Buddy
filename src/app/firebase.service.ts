@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, query, writeBatch, where, deleteDoc, Timestamp, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDoc, getDocs, doc, updateDoc, query, writeBatch, where, deleteDoc, Timestamp, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,30 @@ export class FirebaseService {
     this.chatDataSubject.next(null);
   }
 
+  async getUserInfo(id: any): Promise<any> {
+    try {
+      const userDocRef = doc(this.firestore, 'users', id);
+      const userDoc: any = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        if (data) {
+          const userData = {
+            name: data.name,
+            address: data.address,
+            contact: data.contact,
+            imageData: data.imageData,
+            id: data.id
+          };
+          this.setUserData(userData);
+        }
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async addGoolgeUser(userData: any): Promise<void> {
     try {
       const userRef = collection(this.firestore, 'users');
@@ -47,10 +71,7 @@ export class FirebaseService {
           id: resp.id
         });
       }
-      queryuser.forEach((doc) => {
-        userData.id = doc.data().id;
-      });
-      this.setUserData(userData);
+      localStorage.setItem("id", userData.id);
     } catch (error) {
       console.log(error);
     }
@@ -105,17 +126,16 @@ export class FirebaseService {
       if (querydata.empty) {
         return "Invalid credentials."
       } else {
+        let role
         querydata.forEach((doc) => {
-          let data = {
-            name: doc.data().name,
-            address: doc.data().address,
-            contact: doc.data().contact,
-            imageData: doc.data().imageData,
-            id: doc.data().id
+          const userInfo = doc.data();
+          localStorage.setItem("id", userInfo.id);
+          if (userInfo.role) {
+            localStorage.setItem("id", userInfo.role);
           }
-          localStorage.setItem("id", doc.data().id)
-          this.setUserData(data)
+          role = userInfo.role
         });
+        return role;
       }
     } catch (error) {
       console.log(error);
