@@ -12,6 +12,9 @@ export class AuthGuard implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const token = localStorage.getItem('id');
 
+    if (!token && (state.url === '/signin' || state.url === '/signup')) {
+      return true;
+    }
     if (!token) {
       this.router.navigate(['/signin']);
       return false;

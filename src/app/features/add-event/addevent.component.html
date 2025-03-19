@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add Event</h2>
+<h2 mat-dialog-title> {{data ? 'Update Event' : 'Add Event'}}</h2>
 <mat-dialog-content>
     <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
         <mat-form-field appearance="outline" class="form-field">

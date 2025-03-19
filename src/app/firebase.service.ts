@@ -131,7 +131,7 @@ export class FirebaseService {
           const userInfo = doc.data();
           localStorage.setItem("id", userInfo.id);
           if (userInfo.role) {
-            localStorage.setItem("id", userInfo.role);
+            localStorage.setItem("role", userInfo.role);
           }
           role = userInfo.role
         });

@@ -35,10 +35,10 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of sports data">
             </mat-paginator>
         </mat-tab>
-        <mat-tab label="Match Buddy">
+        <mat-tab *ngIf="userData" label="Match Buddy">
             <app-matchbuddy [userData]="userData"></app-matchbuddy>
         </mat-tab>
-        <mat-tab label="Chats">
+        <mat-tab *ngIf="userData" label="Chats">
             <app-chat [userData]="userData"></app-chat>
         </mat-tab>
     </mat-tab-group>
